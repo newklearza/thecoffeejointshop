@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Coffee Joint & Joint Shop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fffaf0;
+    }
+
+    header h1 {
+      color: #5D3A00;
+      font-family: 'Georgia', serif;
+      font-size: 2.5rem;
+      text-transform: uppercase;
+    }
+
+    h2, .category-header span {
+      color: #5D3A00;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 1.5rem;
+    }
+
+    .category-header svg {
+      stroke: #5D3A00;
+    }
+
+    .btn-primary {
+      background-color: #5D3A00;
+    }
+
+    .btn-primary:hover {
+      background-color: #4b2e00;
+    }
+
+    .item-total, .base-price {
+      color: #1f2937;
+    }
+
+    #floating-cart {
+      background-color: #5D3A00 !important;
+      color: white;
+    }
+  </style>
+</head>
+
+<body class="bg-[#fffaf0] text-gray-800 p-4">
+  <!-- Order Context Modal -->
+  <div id="order-context-modal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg max-w-md w-full shadow-lg text-center">
+      <h2 class="text-xl font-bold mb-4">Where are you ordering from?</h2>
+      <div class="mb-4">
+        <select id="order-type" class="w-full border p-2 rounded">
+  <option disabled selected value="">Select Order Type</option>
+  <option value="store">☕ In Store</option>
+  <option value="home">🏠 At Home</option>
+</select>
+
+      </div>
+      <div id="extra-fields" class="mb-4 hidden"></div>
+      <button id="confirm-order-context" class="bg-amber-700 text-white px-4 py-2 rounded">Start Order</button>
+    </div>
+  </div>
+
+  <div class="max-w-5xl mx-auto">
+    <header class="mb-6 flex items-center justify-between flex-wrap gap-4">
+      <h1 class="text-4xl font-bold">☕ The Coffee Joint & Joint Shop</h1>
+      <img src="{{ url_for('static', filename='images/coffeejoint_logo.jpg') }}" alt="Coffee Joint Logo" class="w-40 h-auto" />
+    </header>
+
+    <!-- Order Status Display -->
+    <div id="order-status" class="text-center text-white bg-amber-700 py-2 rounded mb-4 font-semibold"></div>
+
+    {% for category in menu["categories"] %}
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold border-b pb-2 mb-4 flex items-center justify-between cursor-pointer category-header">
+        <span>{{ category.name }}</span>
+        <svg class="w-5 h-5 transform transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-6 category-items hidden">
+        {% for item in category["items"] %}
+        <div class="bg-white p-5 rounded shadow">
+          <form>
+            <h3 class="text-xl font-bold mb-1">
+              {{ item.name }}
+              <span class="float-right text-[#1f2937]">
+                {% if item.price_small and item.price_large %}
+                  <select name="size" class="size-select border p-1 rounded">
+                    <option value="small" data-price="{{ item.price_small }}">Small - R{{ item.price_small }}</option>
+                    <option value="large" data-price="{{ item.price_large }}">Large - R{{ item.price_large }}</option>
+                  </select>
+                {% else %}
+                  R<span class="base-price">{{ item.price }}</span>
+                {% endif %}
+                |
+                Total: R<span class="item-total">
+                  {% if item.price_small %}{{ '%.2f' % item.price_small }}{% else %}{{ '%.2f' % item.price }}{% endif %}
+                </span>
+              </span>
+            </h3>
+            <p class="text-sm text-gray-600 mb-2">{{ item.description }}</p>
+
+            {% if item.options %}
+            <div class="mb-3">
+              <p class="font-medium mb-1">Options:</p>
+              {% for option in item.options %}
+              <label class="flex items-center mb-1">
+                <input type="checkbox" name="options" value="{{ option.name }}" data-price="{{ option.price }}" class="mr-2 option-checkbox">
+                {{ option.name }} (+R{{ option.price }})
+              </label>
+              {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="mb-3">
+              <label class="font-medium">Quantity:</label>
+              <input type="number" name="quantity" value="1" min="1" class="ml-2 w-16 border p-1 rounded quantity-input" />
+            </div>
+
+            <input type="hidden" name="item_name" value="{{ item.name }}">
+            <input type="hidden" name="base_price" value="{% if item.price_small %}{{ item.price_small }}{% else %}{{ item.price }}{% endif %}">
+
+            <button type="submit" class="btn-primary text-white px-4 py-2 rounded">
+              Add to Cart
+            </button>
+          </form>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endfor %}
+  </div>
+
+  <!-- Floating Call Waiter Button -->
+  <div id="call-waiter-btn" class="fixed bottom-24 right-5 bg-amber-700 text-white px-4 py-2 rounded-lg shadow-md z-40 cursor-pointer hover:bg-yellow-800">
+    🙋 Call Waiter
+  </div>
+
+  <div id="floating-cart" class="fixed bottom-5 right-5 text-white px-5 py-3 rounded-lg shadow-lg font-sans cursor-pointer z-50">
+    🛒 Cart: <span id="cart-count">0</span> items | Total: R<span id="cart-total">0.00</span>
+  </div>
+
+  <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-lg p-6 max-w-md w-full shadow-lg relative">
+      <button id="close-cart" class="absolute top-2 right-3 text-gray-600 hover:text-gray-900 font-bold text-xl">&times;</button>
+      <h2 class="text-2xl font-bold mb-4">Your Order 🛒</h2>
+      <div id="cart-items" class="max-h-60 overflow-y-auto mb-4"></div>
+      <div class="font-semibold text-lg mb-4 text-[#5D3A00]">Total: R<span id="modal-cart-total">0.00</span></div>
+      <button id="place-order" class="btn-primary text-white px-4 py-2 rounded w-full">Place Order</button>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/ordertype.js') }}"></script>
+</body>
+</html>

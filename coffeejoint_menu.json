@@ -1,0 +1,71 @@
+{
+  "categories": [
+    {
+      "name": "Coffee & Hot Drinks",
+      "items": [
+        { "name": "Espresso", "description": "Single or double shot", "price_small": 25, "price_large": 30 },
+        { "name": "Americano", "description": "Black coffee, hot water", "price_small": 28, "price_large": 35 },
+        { "name": "Cappuccino", "description": "Foamed milk and espresso", "price_small": 32, "price_large": 40 },
+        { "name": "Latte", "description": "Espresso and steamed milk", "price_small": 34, "price_large": 42 },
+        { "name": "Mocha", "description": "Coffee with chocolate", "price_small": 36, "price_large": 45 },
+        { "name": "Chai Latte", "description": "Spiced tea with frothy milk", "price_small": 34, "price_large": 42 },
+        { "name": "Hot Chocolate", "description": "Rich creamy cocoa", "price_small": 30, "price_large": 38 }
+      ]
+    },
+    {
+      "name": "Edibles",
+      "items": [
+        { "name": "Brownie (THC)", "description": "Choc fudge brownie infused", "price": 60 },
+        { "name": "Ganja Gummies", "description": "Fruity gummies, 10mg each", "price": 75 },
+        { "name": "Infused Cookie", "description": "Classic choc chip", "price": 50 },
+        { "name": "Space Cake Slice", "description": "Cinnamon cake slice (med strength)", "price": 70 },
+        { "name": "Lollipop (CBD)", "description": "Calming sucker", "price": 35 }
+      ]
+    },
+    {
+      "name": "Vape Pens & Cartridges",
+      "items": [
+        { "name": "Disposable Vape", "description": "1000 puff / 5% nicotine", "price": 120 },
+        { "name": "CBD Vape Cartridge", "description": "Relax blend (510 thread)", "price": 180 },
+        { "name": "THC Vape Cartridge", "description": "Uplift blend (510 thread)", "price": 220 },
+        { "name": "Vape Battery Kit", "description": "510 thread with charger", "price": 200 }
+      ]
+    },
+    {
+      "name": "Munchies & Snacks",
+      "items": [
+        { "name": "Toasted Cheese Sandwich", "description": "3-cheese melt on ciabatta", "price": 60 },
+        { "name": "Loaded Fries", "description": "Fries with melted cheese and jalapeños", "price": 58 },
+        { "name": "Chicken Nuggets", "description": "Crispy fried pieces", "price": 55 },
+        { "name": "Mac & Cheese", "description": "Cheesy classic bowl", "price": 65 },
+        { "name": "Nachos & Salsa", "description": "Corn chips, tomato salsa, guac", "price": 60 }
+      ]
+    },
+    {
+      "name": "Wellness Shots",
+      "items": [
+        { "name": "CBD Calm Shot", "description": "Mint & lemon infused CBD", "price": 45 },
+        { "name": "Turmeric Immunity Shot", "description": "Turmeric, ginger, cayenne", "price": 38 },
+        { "name": "THC Sleep Shot", "description": "Low dose night aid", "price": 50 }
+      ]
+    },
+    {
+      "name": "Juices & Cold Beverages",
+      "items": [
+        { "name": "Cold Brew Coffee", "description": "Overnight steeped blend", "price": 45 },
+        { "name": "Iced Latte", "description": "Chilled espresso + milk", "price": 42 },
+        { "name": "Fresh Orange Juice", "description": "Freshly pressed", "price": 38 },
+        { "name": "Sparkling Water", "description": "500ml bottle", "price": 20 },
+        { "name": "CBD Infused Lemonade", "description": "Chill citrus sipper", "price": 50 }
+      ]
+    },
+    {
+      "name": "Bundles",
+      "items": [
+        { "name": "Wake & Bake Combo", "description": "Coffee + THC edible", "price": 95 },
+        { "name": "Chill Pack", "description": "CBD shot + vape pen", "price": 150 },
+        { "name": "Snack Attack", "description": "Fries + infused cookie", "price": 85 }
+      ]
+    }
+  ]
+}
