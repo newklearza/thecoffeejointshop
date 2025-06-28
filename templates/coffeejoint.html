@@ -45,21 +45,44 @@
       background-color: #5D3A00 !important;
       color: white;
     }
+
+    /* Hamburger Menu */
+    #menu-btn { cursor: pointer; }
+    #menu { display: none; position: absolute; top: 3.5rem; right: 1rem; background: white; border: 1px solid #ccc; padding: 1rem; border-radius: 0.5rem; z-index: 999; }
+    #menu a { display: block; padding: 0.25rem 0; color: #5D3A00; font-weight: bold; }
   </style>
 </head>
 
 <body class="bg-[#fffaf0] text-gray-800 p-4">
+
+  <!-- Hamburger Menu -->
+  <nav class="fixed top-4 right-4 z-50">
+    <div id="menu-btn" class="text-3xl text-[#5D3A00]">&#9776;</div>
+    <div id="menu">
+      <a href="#about">About Us</a>
+      <a href="https://maps.google.com" target="_blank">Google Maps</a>
+    </div>
+  </nav>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('menu-btn').addEventListener('click', () => {
+        const menu = document.getElementById('menu');
+        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+  </script>
+
   <!-- Order Context Modal -->
   <div id="order-context-modal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
     <div class="bg-white p-6 rounded-lg max-w-md w-full shadow-lg text-center">
       <h2 class="text-xl font-bold mb-4">Where are you ordering from?</h2>
       <div class="mb-4">
         <select id="order-type" class="w-full border p-2 rounded">
-  <option disabled selected value="">Select Order Type</option>
-  <option value="store">☕ In Store</option>
-  <option value="home">🏠 At Home</option>
-</select>
-
+          <option disabled selected value="">Select Order Type</option>
+          <option value="store">☕ In Store</option>
+          <option value="home">🏠 At Home</option>
+        </select>
       </div>
       <div id="extra-fields" class="mb-4 hidden"></div>
       <button id="confirm-order-context" class="bg-amber-700 text-white px-4 py-2 rounded">Start Order</button>
@@ -79,7 +102,7 @@
     <section class="mb-10">
       <h2 class="text-2xl font-semibold border-b pb-2 mb-4 flex items-center justify-between cursor-pointer category-header">
         <span>{{ category.name }}</span>
-        <svg class="w-5 h-5 transform transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <svg class="w-5 h-5 transform transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
         </svg>
       </h2>
@@ -138,11 +161,7 @@
     {% endfor %}
   </div>
 
-  <!-- Floating Call Waiter Button -->
-  <div id="call-waiter-btn" class="fixed bottom-24 right-5 bg-amber-700 text-white px-4 py-2 rounded-lg shadow-md z-40 cursor-pointer hover:bg-yellow-800">
-    🙋 Call Waiter
-  </div>
-
+  <!-- Floating Cart -->
   <div id="floating-cart" class="fixed bottom-5 right-5 text-white px-5 py-3 rounded-lg shadow-lg font-sans cursor-pointer z-50">
     🛒 Cart: <span id="cart-count">0</span> items | Total: R<span id="cart-total">0.00</span>
   </div>
@@ -155,6 +174,11 @@
       <div class="font-semibold text-lg mb-4 text-[#5D3A00]">Total: R<span id="modal-cart-total">0.00</span></div>
       <button id="place-order" class="btn-primary text-white px-4 py-2 rounded w-full">Place Order</button>
     </div>
+  </div>
+
+  <div id="about" class="text-center py-10 text-gray-700">
+    <h2 class="text-2xl font-bold mb-2">About The Coffee Joint ☕</h2>
+    <p>A local favorite serving the best coffee and infused treats in town. Proudly South African and community-driven.</p>
   </div>
 
   <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
